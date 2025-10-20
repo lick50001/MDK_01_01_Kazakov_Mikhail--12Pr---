@@ -58,5 +58,17 @@ namespace Book_Kazakov.Classes
             }
             return toGenres;
         }
+
+        public string ToAuthors()
+        {
+            string toAuthors = "";
+            for (int iAuthor = 0; iAuthor < this.Authors.Count; iAuthor ++)
+            {
+                toAuthors += this.Authors[iAuthor].FIO;
+                if (iAuthor < this.Authors.Count - 1)
+                    toAuthors += ", ";
+            }
+            return toAuthors;
+        }
     }
 }
