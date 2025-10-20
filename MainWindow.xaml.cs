@@ -25,6 +25,7 @@ namespace Book_Kazakov
         List<Classes.Author> AllAuthors = Classes.Author.AllAuthors();
         List<Classes.Genre> AllGenres = Classes.Genre.AllGenres();
         List<Classes.Book> AllBooks = Classes.Book.AllBook();
+        private List<Book> currentBooks;
         public MainWindow()
         {
             InitializeComponent();
@@ -92,7 +93,33 @@ namespace Book_Kazakov
             {
                 FindBook = FindBook.FindAll(x => x.Year == Convert.ToInt32(cbYear.SelectedItem.ToString()));
                 CreateUI(FindBook);
-            } 
+            }
+            currentBooks = FindBook;
+        }
+
+        private void SaveFile(object sender, RoutedEventArgs e)
+        {
+            SaveToTextFile();
+        }
+
+        private void SaveToTextFile()
+        {
+            var lines = new List<string>();
+            lines.Add("Список книг");
+            lines.Add(new string('=', 50));
+
+            foreach (var book in currentBooks)
+            {
+                lines.Add($"ID: {book.Id}");
+                lines.Add($"Название: {book.Name}");
+                lines.Add($"Авторы: {book.ToAuthors()}");
+                lines.Add($"Жанры: {book.ToGenres()}");
+                lines.Add($"Год: {book.Year}");
+                lines.Add(new string('-', 30));
+            }
+
+            File.WriteAllLines("C:\\Users\\student-a502\\Desktop\\books.txt", lines, Encoding.UTF8);
+            MessageBox.Show("Данные сохранены в books.txt", "Готово", MessageBoxButton.OK);
         }
     }
 }
